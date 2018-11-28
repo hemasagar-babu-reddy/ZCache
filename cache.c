@@ -92,6 +92,16 @@
    cache set index function is CACHE_SET, defined above */
 #define CACHE_HASH(cp, key)						\
   (((key >> 24) ^ (key >> 16) ^ (key >> 8) ^ key) & ((cp)->hsize-1))
+#define CACHE_HASH1(cp, key)						\
+  (((key >> 24) ^ (key >> 16) ^ (key >> 8) ^ key) & ((cp)->hsize-1))
+#define CACHE_HASH2(cp, key)						\
+  (((key >> 20) ^ (key >> 10) ^ (key >> 8) ^ key) & ((cp)->hsize-1))
+#define CACHE_HASH3(cp, key)						\
+  (((key >> 16) ^ (key >> 10) ^ (key >> 8) ^ key) & ((cp)->hsize-1))
+#define CACHE_HASH4(cp, key)						\
+  (((key >> 20) ^ (key >> 10) ^ (key >> 16) ^ key) & ((cp)->hsize-1))
+
+
 
 /* copy data out of a cache block to buffer indicated by argument pointer p */
 #define CACHE_BCOPY(cmd, blk, bofs, p, nbytes)	\
@@ -624,13 +634,16 @@ cache_stats(struct cache_t *cp,		/* cache instance */
 }
 
 // find the least recently used block 
-struct node_t * find_repl_node(struct cache_tree_t *tree0,
+struct node_t * find_repl_node(struct cache_t *cp,
+			       struct cache_tree_t *tree0,
 			       struct cache_tree_t *tree1,
 			       struct cache_tree_t *tree2,
 			       struct cache_tree_t *tree3){
   struct node_t *lru, *temp, *tempt, *temp1, *temp2, *temp3;
   tick_t lru_time;
-  int tset;
+  int tset, tway;
+  struct cache_blk_t *tnblk, *tpblk, *tblk;
+
   if (tree0->tree_head != NULL){
     lru = tree0->tree_head;
     lru_time = tree0->tree_head->blk->last_access;
@@ -707,14 +720,371 @@ struct node_t * find_repl_node(struct cache_tree_t *tree0,
     lru = (tree3->tree_head)->three;
     lru_time = tree3->tree_head->three->blk->last_access;
   }
-  
   while (lru->parent != NULL){
     temp = lru->parent;
     if (lru->one == NULL && lru->two == NULL && lru->three == NULL){
+      if(temp->way == 1){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  //(cp->sets[temp->set].way_one)->way_next = 
+	  cp->sets[lru->set].way_one = temp->blk;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = tnblk;
+	  (cp->sets[lru->set].way_one)->way_prev = tpblk;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = tnblk;
+	  (cp->sets[lru->set].way_two)->way_prev = tpblk;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = tnblk;
+	  (cp->sets[lru->set].way_three)->way_prev = tpblk;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = tnblk;
+	  (cp->sets[lru->set].way_four)->way_prev = tpblk;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      }
+      else if(temp->way == 2){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_one = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = tnblk;
+	  (cp->sets[lru->set].way_one)->way_prev = tpblk;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = tnblk;
+	  (cp->sets[lru->set].way_two)->way_prev = tpblk;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = tnblk;
+	  (cp->sets[lru->set].way_three)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = tnblk;
+	  (cp->sets[lru->set].way_four)->way_prev = tpblk;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      } 
+      else if(temp->way == 3){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_one = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = tnblk;
+	  (cp->sets[lru->set].way_one)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = tnblk;
+	  (cp->sets[lru->set].way_two)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = tnblk;
+	  (cp->sets[lru->set].way_three)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = tnblk;
+	  (cp->sets[lru->set].way_four)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      }
+      else if(temp->way == 4){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_one = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = tnblk;
+	  (cp->sets[lru->set].way_one)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = tnblk;
+	  (cp->sets[lru->set].way_two)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = tnblk;
+	  (cp->sets[lru->set].way_three)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  tnblk = lru->blk->way_next;
+	  tpblk = lru->blk->way_prev;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = tnblk;
+	  (cp->sets[lru->set].way_four)->way_prev = tpblk;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      }
       if (temp->one == lru){
 	/*tset = lru->set;
 	lru->set = temp->set;
-	temp->set = tset;*/
+	temp->set = tset;
+	tblk = lru->blk;
+	lru->blk = temp->blk;
+	temp->blk = tblk;
+	*/
 	lru->parent = temp->parent;
 	lru->one = temp;
 	lru->two = temp->two;
@@ -729,7 +1099,11 @@ struct node_t * find_repl_node(struct cache_tree_t *tree0,
       else if (temp->two == lru){
 	/*tset = lru->set;
 	lru->set = temp->set;
-	temp->set = tset;*/
+	temp->set = tset;
+	tblk = lru->blk;
+	lru->blk = temp->blk;
+	temp->blk = tblk;
+	*/
 	lru->parent = temp->parent;
 	lru->two = temp;
 	lru->one = temp->one;
@@ -745,7 +1119,11 @@ struct node_t * find_repl_node(struct cache_tree_t *tree0,
       else if (temp->three == lru){
 	/*tset = lru->set;
 	lru->set = temp->set;
-	temp->set = tset;*/
+	temp->set = tset;
+	tblk = lru->blk;
+	lru->blk = temp->blk;
+	temp->blk = tblk;
+	*/
 	lru->parent = temp->parent;
 	lru->three = temp;
 	lru->two = temp->two;
@@ -760,10 +1138,342 @@ struct node_t * find_repl_node(struct cache_tree_t *tree0,
       }
     }
     else{
+      if(temp->way == 1){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  //(cp->sets[temp->set].way_one)->way_next = 
+	  cp->sets[lru->set].way_one = temp->blk;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_one)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_two)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_three)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_one = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_one)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_one)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_four)->way_prev = lru->blk->way_prev;
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      }
+      else if(temp->way == 2){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_one = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_one)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_two)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_three)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_two = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_two)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_two)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_four)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      } 
+      else if(temp->way == 3){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_one = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_one)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_two)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_three)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_three = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_three)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_three)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_four)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      }
+      else if(temp->way == 4){
+	if(lru->way == 1){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_one = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_one)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_one)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 2){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_two = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_two)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_two)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 3){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_three = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_three)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_three)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+	else if(lru->way == 4){
+	  //tblk = temp->blk;
+	  tset = lru->set;
+	  tway = lru->way;
+	  cp->sets[temp->set].way_four = lru->blk;
+	  cp->sets[lru->set].way_four = temp->blk;
+	  (cp->sets[temp->set].way_four)->way_next = temp->blk->way_next;
+	  (cp->sets[temp->set].way_four)->way_prev = temp->blk->way_prev;
+	  (cp->sets[lru->set].way_four)->way_next = lru->blk->way_next;
+	  (cp->sets[lru->set].way_four)->way_prev = lru->blk->way_prev;
+	  
+	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->set = temp->set;
+	  lru->way = temp->way;
+	  temp->set = tset;
+	  temp->way = tway;
+	  tblk = lru->blk;
+	  lru->blk = temp->blk;
+	  temp->blk = tblk;
+	}
+      }
       if (temp->one == lru){
 	/*tset = lru->set;
 	lru->set = temp->set;
-	temp->set = tset;*/
+	temp->set = tset;
+	tblk = lru->blk;
+	lru->blk = temp->blk;
+	temp->blk = tblk;
+	*/
 	lru->parent = temp->parent;
 	temp1 = lru->one;
 	temp2 = lru->two;
@@ -785,7 +1495,11 @@ struct node_t * find_repl_node(struct cache_tree_t *tree0,
       else if (temp->two == lru){
 	/*tset = lru->set;
 	lru->set = temp->set;
-	temp->set = tset;*/
+	temp->set = tset;
+	tblk = lru->blk;
+	lru->blk = temp->blk;
+	temp->blk = tblk;
+	*/
 	lru->parent = temp->parent;
 	temp1 = lru->one;
 	temp2 = lru->two;
@@ -807,7 +1521,11 @@ struct node_t * find_repl_node(struct cache_tree_t *tree0,
       else if (temp->three == lru){
 	/*tset = lru->set;
 	lru->set = temp->set;
-	temp->set = tset;*/
+	temp->set = tset;
+	tblk = lru->blk;
+	lru->blk = temp->blk;
+	temp->blk = tblk;
+	*/
 	lru->parent = temp->parent;
 	temp1 = lru->one;
 	temp2 = lru->two;
@@ -826,6 +1544,7 @@ struct node_t * find_repl_node(struct cache_tree_t *tree0,
 	lru->two->parent = lru;
 	lru->three->parent = lru;
       }
+      
     }
     if(temp && (tree0->tree_head == temp)){
       tree0->tree_head = lru;
@@ -978,10 +1697,10 @@ cache_access(struct cache_t *cp,	/* cache to access */
       }
   }
   else if (!strcmp(cp->name, "ul2")){
-    hset0 = CACHE_HASH(cp, set);
-    hset1 = CACHE_HASH(cp, set);
-    hset2 = CACHE_HASH(cp, set);
-    hset3 = CACHE_HASH(cp, set);
+    hset0 = CACHE_HASH1(cp, set);
+    hset1 = CACHE_HASH2(cp, set);
+    hset2 = CACHE_HASH3(cp, set);
+    hset3 = CACHE_HASH4(cp, set);
    /*
     hset0 = set;
     hset1 = set;
@@ -1033,7 +1752,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
     repl_cand2 = malloc(sizeof(*repl_cand2));
     repl_cand3 = malloc(sizeof(*repl_cand3));
     //First tree
-    hset0 = CACHE_HASH(cp, set);
+    hset0 = CACHE_HASH1(cp, set);
     temp = cp->sets[hset0].way_one;
     if (temp != NULL){
       repl_cand0->tree_head = malloc(sizeof(*(repl_cand0->tree_head)));
@@ -1045,10 +1764,11 @@ cache_access(struct cache_t *cp,	/* cache to access */
       repl_cand0->tree_head->two = NULL;
       repl_cand0->tree_head->three = NULL;
       repl_cand0->tree_head->set = hset0;
-      hset0 = CACHE_HASH(cp, hset0);
-      hset1 = CACHE_HASH(cp, hset0);
-      hset2 = CACHE_HASH(cp, hset0);
-      hset3 = CACHE_HASH(cp, hset0);
+      repl_cand0->tree_head->way = 1;
+      hset0 = CACHE_HASH1(cp, hset0);
+      hset1 = CACHE_HASH2(cp, hset0);
+      hset2 = CACHE_HASH3(cp, hset0);
+      hset3 = CACHE_HASH4(cp, hset0);
       
       if((cp->sets[hset1].way_two != NULL)){
 	temp = (cp->sets[hset1].way_two);
@@ -1061,6 +1781,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand0->tree_head->one->two = NULL;
 	repl_cand0->tree_head->one->three = NULL;
 	repl_cand0->tree_head->one->set = hset1;
+	repl_cand0->tree_head->one->way = 2;
       }
       else {
 	repl = cp->sets[hset1].way_two;
@@ -1078,6 +1799,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand0->tree_head->two->two = NULL;
 	repl_cand0->tree_head->two->three = NULL;
 	repl_cand0->tree_head->two->set = hset2;
+	repl_cand0->tree_head->two->way = 3;
       }
       else {
 	repl = cp->sets[hset2].way_three;
@@ -1095,6 +1817,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand0->tree_head->three->two = NULL;
 	repl_cand0->tree_head->three->three = NULL;
 	repl_cand0->tree_head->three->set = hset3;
+	repl_cand0->tree_head->three->way = 4;
       }
       else {
 	repl = cp->sets[hset3].way_four;
@@ -1109,7 +1832,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
     }
 
     //Second tree
-    hset1 = CACHE_HASH(cp, set);
+    hset1 = CACHE_HASH2(cp, set);
     
     if((cp->sets[hset1].way_two != NULL)){
       temp = cp->sets[hset1].way_two;
@@ -1122,10 +1845,11 @@ cache_access(struct cache_t *cp,	/* cache to access */
       repl_cand1->tree_head->two = NULL;
       repl_cand1->tree_head->three = NULL;
       repl_cand1->tree_head->set = hset1;
-      hset0 = CACHE_HASH(cp, hset1);
-      hset1 = CACHE_HASH(cp, hset1);
-      hset2 = CACHE_HASH(cp, hset1);
-      hset3 = CACHE_HASH(cp, hset1);
+      repl_cand1->tree_head->way = 2;
+      hset0 = CACHE_HASH1(cp, hset1);
+      hset1 = CACHE_HASH2(cp, hset1);
+      hset2 = CACHE_HASH3(cp, hset1);
+      hset3 = CACHE_HASH4(cp, hset1);
       
       if(cp->sets[hset0].way_one != NULL){
 	temp = (cp->sets[hset0].way_one);
@@ -1138,6 +1862,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand1->tree_head->one->two = NULL;
 	repl_cand1->tree_head->one->three = NULL;
 	repl_cand1->tree_head->one->set = hset0;
+	repl_cand1->tree_head->one->way = 1;
       }
       else {
 	repl = cp->sets[hset0].way_one;
@@ -1155,6 +1880,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand1->tree_head->two->two = NULL;
 	repl_cand1->tree_head->two->three = NULL;
 	repl_cand1->tree_head->two->set = hset2;
+	repl_cand1->tree_head->two->way = 3;
       }
       else {
 	repl = cp->sets[hset2].way_three;
@@ -1172,6 +1898,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand1->tree_head->three->two = NULL;
 	repl_cand1->tree_head->three->three = NULL;
 	repl_cand1->tree_head->three->set = hset3;
+	repl_cand1->tree_head->three->way = 4;
       }
       else {
 	repl = cp->sets[hset3].way_four;
@@ -1186,7 +1913,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
     }
     
     //Third tree
-    hset2 = CACHE_HASH(cp, set);
+    hset2 = CACHE_HASH3(cp, set);
     if((cp->sets[hset2].way_three != NULL)){
       temp = (cp->sets[hset2].way_three);
       repl_cand2->tree_head = malloc(sizeof(*(repl_cand2->tree_head)));
@@ -1198,10 +1925,11 @@ cache_access(struct cache_t *cp,	/* cache to access */
       repl_cand2->tree_head->two = NULL;
       repl_cand2->tree_head->three = NULL;
       repl_cand2->tree_head->set = hset2;
-      hset0 = CACHE_HASH(cp, hset2);
-      hset1 = CACHE_HASH(cp, hset2);
-      hset2 = CACHE_HASH(cp, hset2);
-      hset3 = CACHE_HASH(cp, hset2);
+      repl_cand2->tree_head->way = 3;
+      hset0 = CACHE_HASH1(cp, hset2);
+      hset1 = CACHE_HASH2(cp, hset2);
+      hset2 = CACHE_HASH3(cp, hset2);
+      hset3 = CACHE_HASH4(cp, hset2);
     
       if((cp->sets[hset0].way_one != NULL)){
 	temp = (cp->sets[hset0].way_one);
@@ -1214,6 +1942,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand2->tree_head->one->two = NULL;
 	repl_cand2->tree_head->one->three = NULL;
 	repl_cand2->tree_head->one->set = hset0;
+	repl_cand2->tree_head->one->way = 1;
       }
       else {
 	repl = cp->sets[hset0].way_one;
@@ -1231,6 +1960,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand2->tree_head->two->two = NULL;
 	repl_cand2->tree_head->two->three = NULL;
 	repl_cand2->tree_head->two->set = hset1;
+	repl_cand2->tree_head->two->way = 2;
       }
       else {
 	repl = cp->sets[hset1].way_two;
@@ -1248,6 +1978,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand2->tree_head->three->two = NULL;
 	repl_cand2->tree_head->three->three = NULL;
 	repl_cand2->tree_head->three->set = hset3;
+	repl_cand2->tree_head->three->way = 4;
       }
       else {
 	repl = cp->sets[hset3].way_four;
@@ -1262,7 +1993,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
     }
     
   //Fourth tree
-    hset3 = CACHE_HASH(cp, set);
+    hset3 = CACHE_HASH4(cp, set);
     if ((cp->sets[hset3].way_four != NULL)){
       temp = cp->sets[hset3].way_four;
       repl_cand3->tree_head = malloc(sizeof(*(repl_cand3->tree_head)));
@@ -1274,10 +2005,11 @@ cache_access(struct cache_t *cp,	/* cache to access */
       repl_cand3->tree_head->two = NULL;
       repl_cand3->tree_head->three = NULL;
       repl_cand3->tree_head->set = hset3;
-      hset0 = CACHE_HASH(cp, hset3);
-      hset1 = CACHE_HASH(cp, hset3);
-      hset2 = CACHE_HASH(cp, hset3);
-      hset3 = CACHE_HASH(cp, hset3);
+      repl_cand3->tree_head->way = 4;
+      hset0 = CACHE_HASH1(cp, hset3);
+      hset1 = CACHE_HASH2(cp, hset3);
+      hset2 = CACHE_HASH3(cp, hset3);
+      hset3 = CACHE_HASH4(cp, hset3);
     
       if((cp->sets[hset0].way_one != NULL)){
 	temp = (cp->sets[hset0].way_one);
@@ -1290,6 +2022,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand3->tree_head->one->two = NULL;
 	repl_cand3->tree_head->one->three = NULL;
 	repl_cand3->tree_head->one->set = hset0;
+	repl_cand3->tree_head->one->way = 1;
       }
       else {
 	repl = cp->sets[hset0].way_one;
@@ -1307,6 +2040,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand3->tree_head->two->two = NULL;
 	repl_cand3->tree_head->two->three = NULL;
 	repl_cand3->tree_head->two->set = hset1;
+	repl_cand3->tree_head->two->way = 2;
       }
       else {
 	repl = cp->sets[hset1].way_two;
@@ -1324,6 +2058,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand3->tree_head->three->two = NULL;
 	repl_cand3->tree_head->three->three = NULL;
 	repl_cand3->tree_head->three->set = hset2;
+	repl_cand3->tree_head->three->way = 3;
       }
       else {
 	repl = cp->sets[hset2].way_three;
@@ -1337,7 +2072,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
       goto miss_handler;
     }
     
-    repl_node = find_repl_node (repl_cand0, repl_cand1, repl_cand2, repl_cand3);
+    repl_node = find_repl_node (cp, repl_cand0, repl_cand1, repl_cand2, repl_cand3);
     repl  = repl_node->blk;     
     hrepl = repl_node->set;
   }

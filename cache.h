@@ -96,7 +96,7 @@
 
 /* highly associative caches are implemented using a hash table lookup to
    speed block access, this macro decides if a cache is "highly associative" */
-#define CACHE_HIGHLY_ASSOC(cp)	((cp)->assoc > 4)
+#define CACHE_HIGHLY_ASSOC(cp)	((cp)->assoc > 8)
 
 /* cache replacement policy */
 enum cache_policy {
@@ -128,6 +128,7 @@ struct cache_blk_t
 				   pre-decode data or physical page address */
   /* DATA should be pointer-aligned due to preceeding field */
   /* NOTE: this is a variable-size tail array, this must be the LAST field
+
      defined in this structure! */
   byte_t data[1];		/* actual data block starts here, block size
 				   should probably be a multiple of 8 */
@@ -156,6 +157,7 @@ struct node_t{
   struct node_t *three;
   struct cache_blk_t *blk;
   int set;
+  int way;
   // struct cache_blk_t *blk;
 };
 
