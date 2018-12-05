@@ -59,7 +59,6 @@
 #include "machine.h"
 #include "memory.h"
 #include "stats.h"
-#include <sys/time.h>
 
 /*
  * This module contains code to implement various cache-like structures.  The
@@ -97,7 +96,7 @@
 
 /* highly associative caches are implemented using a hash table lookup to
    speed block access, this macro decides if a cache is "highly associative" */
-#define CACHE_HIGHLY_ASSOC(cp)	((cp)->assoc > 8)
+#define CACHE_HIGHLY_ASSOC(cp)	((cp)->assoc > 4)
 
 /* cache replacement policy */
 enum cache_policy {
@@ -124,17 +123,13 @@ struct cache_blk_t
   unsigned int status;		/* block status, see CACHE_BLK_* defs above */
   tick_t ready;		/* time when block will be accessible, field
 				   is set when a miss fetch is initiated */
-  tick_t last_access;   /* time of last access */
-  //struct timeval last_access;
   byte_t *user_data;		/* pointer to user defined data, e.g.,
 				   pre-decode data or physical page address */
   /* DATA should be pointer-aligned due to preceeding field */
   /* NOTE: this is a variable-size tail array, this must be the LAST field
-
      defined in this structure! */
   byte_t data[1];		/* actual data block starts here, block size
 				   should probably be a multiple of 8 */
-  md_addr_t addr;
 };
 
 /* cache set definition (one or more blocks sharing the same set index) */
@@ -142,32 +137,13 @@ struct cache_set_t
 {
   struct cache_blk_t **hash;	/* hash table: for fast access w/assoc, NULL
 				   for low-assoc caches */
-  struct cache_blk_t *way_one;	/* head of way list */
-  struct cache_blk_t *way_two;	
-  struct cache_blk_t *way_three;
-  struct cache_blk_t *way_four;
-  struct cache_blk_t *way_head;
-  struct cache_blk_t *way_tail;
+  struct cache_blk_t *way_head;	/* head of way list */
+  struct cache_blk_t *way_tail;	/* tail pf way list */
   struct cache_blk_t *blks;	/* cache blocks, allocated sequentially, so
 				   this pointer can also be used for random
 				   access to cache blocks */
 };
 
-struct node_t{
-  struct node_t *parent;
-  struct node_t *one;
-  struct node_t *two;
-  struct node_t *three;
-  struct cache_blk_t *blk;
-  int set;
-  int way;
-  int rset;
-  // struct cache_blk_t *blk;
-};
-
-struct cache_tree_t{
-  struct node_t *tree_head;
-};
 /* cache definition */
 struct cache_t
 {
