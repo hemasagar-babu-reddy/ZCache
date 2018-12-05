@@ -821,7 +821,6 @@ struct node_t * find_repl_node(struct cache_t *cp,
   if ((tree2->tree_head != NULL) && (tree2->tree_head->blk->last_access <= lru_time)){
     lru = tree2->tree_head;
     lru_time = tree2->tree_head->blk->last_access;
-    
   } 
   if ((tree3->tree_head != NULL) && (tree3->tree_head->blk->last_access <= lru_time)){
     lru = tree3->tree_head;
@@ -843,6 +842,42 @@ struct node_t * find_repl_node(struct cache_t *cp,
     lru = (tree1->tree_head)->three;
     lru_time = tree1->tree_head->three->blk->last_access;
   }
+  if((tree1->tree_head->one->one != NULL) && (tree1->tree_head->one->one->blk->last_access < lru_time)){
+    lru = tree1->tree_head->one->one;
+    lru_time = tree1->tree_head->one->one->blk->last_access;
+  }
+  if((tree1->tree_head->one->two != NULL) && (tree1->tree_head->one->two->blk->last_access < lru_time)){
+    lru = tree1->tree_head->one->two;
+    lru_time = tree1->tree_head->one->two->blk->last_access;
+  }
+  if((tree1->tree_head->one->three != NULL) && (tree1->tree_head->one->three->blk->last_access < lru_time)){
+    lru = tree1->tree_head->one->three;
+    lru_time = tree1->tree_head->one->three->blk->last_access;
+  }
+  if((tree1->tree_head->two->one != NULL) && (tree1->tree_head->two->one->blk->last_access < lru_time)){
+    lru = tree1->tree_head->two->one;
+    lru_time = tree1->tree_head->two->one->blk->last_access;
+  }
+  if((tree1->tree_head->two->two != NULL) && (tree1->tree_head->two->two->blk->last_access < lru_time)){
+    lru = tree1->tree_head->two->two;
+    lru_time = tree1->tree_head->two->two->blk->last_access;
+  }
+  if((tree1->tree_head->two->three != NULL) && (tree1->tree_head->two->three->blk->last_access < lru_time)){
+    lru = tree1->tree_head->two->three;
+    lru_time = tree1->tree_head->two->three->blk->last_access;
+  }
+  if((tree1->tree_head->three->one != NULL) && (tree1->tree_head->three->one->blk->last_access < lru_time)){
+    lru = tree1->tree_head->three->one;
+    lru_time = tree1->tree_head->three->one->blk->last_access;
+  }
+  if((tree1->tree_head->three->two != NULL) && (tree1->tree_head->three->two->blk->last_access < lru_time)){
+    lru = tree1->tree_head->three->two;
+    lru_time = tree1->tree_head->three->two->blk->last_access;
+  }
+  if((tree1->tree_head->three->three != NULL) && (tree1->tree_head->three->three->blk->last_access < lru_time)){
+    lru = tree1->tree_head->three->three;
+    lru_time = tree1->tree_head->three->three->blk->last_access;
+  }
   if (((tree2->tree_head)->one != NULL) && (tree2->tree_head->one->blk->last_access < lru_time)){
     lru = (tree2->tree_head)->one;
     lru_time = tree2->tree_head->one->blk->last_access;
@@ -854,6 +889,42 @@ struct node_t * find_repl_node(struct cache_t *cp,
   if (((tree2->tree_head)->three != NULL) && (tree2->tree_head->three->blk->last_access < lru_time)){
     lru = (tree2->tree_head)->three;
     lru_time = tree2->tree_head->three->blk->last_access;
+  }
+  if((tree2->tree_head->one->one != NULL) && (tree2->tree_head->one->one->blk->last_access < lru_time)){
+    lru = tree2->tree_head->one->one;
+    lru_time = tree2->tree_head->one->one->blk->last_access;
+  }
+  if((tree2->tree_head->one->two != NULL) && (tree2->tree_head->one->two->blk->last_access < lru_time)){
+    lru = tree2->tree_head->one->two;
+    lru_time = tree2->tree_head->one->two->blk->last_access;
+  }
+  if((tree2->tree_head->one->three != NULL) && (tree2->tree_head->one->three->blk->last_access < lru_time)){
+    lru = tree2->tree_head->one->three;
+    lru_time = tree2->tree_head->one->three->blk->last_access;
+  }
+  if((tree2->tree_head->two->one != NULL) && (tree2->tree_head->two->one->blk->last_access < lru_time)){
+    lru = tree2->tree_head->two->one;
+    lru_time = tree2->tree_head->two->one->blk->last_access;
+  }
+  if((tree2->tree_head->two->two != NULL) && (tree2->tree_head->two->two->blk->last_access < lru_time)){
+    lru = tree2->tree_head->two->two;
+    lru_time = tree2->tree_head->two->two->blk->last_access;
+  }
+  if((tree2->tree_head->two->three != NULL) && (tree2->tree_head->two->three->blk->last_access < lru_time)){
+    lru = tree2->tree_head->two->three;
+    lru_time = tree2->tree_head->two->three->blk->last_access;
+  }
+  if((tree2->tree_head->three->one != NULL) && (tree2->tree_head->three->one->blk->last_access < lru_time)){
+    lru = tree2->tree_head->three->one;
+    lru_time = tree2->tree_head->three->one->blk->last_access;
+  }
+  if((tree2->tree_head->three->two != NULL) && (tree2->tree_head->three->two->blk->last_access < lru_time)){
+    lru = tree2->tree_head->three->two;
+    lru_time = tree2->tree_head->three->two->blk->last_access;
+  }
+  if((tree2->tree_head->three->three != NULL) && (tree2->tree_head->three->three->blk->last_access < lru_time)){
+    lru = tree2->tree_head->three->three;
+    lru_time = tree2->tree_head->three->three->blk->last_access;
   }
   if (((tree3->tree_head)->one != NULL) && (tree3->tree_head->one->blk->last_access < lru_time)){
     lru = (tree3->tree_head)->one;
@@ -867,6 +938,42 @@ struct node_t * find_repl_node(struct cache_t *cp,
     lru = (tree3->tree_head)->three;
     lru_time = tree3->tree_head->three->blk->last_access;
   }
+  if((tree3->tree_head->one->one != NULL) && (tree3->tree_head->one->one->blk->last_access < lru_time)){
+    lru = tree3->tree_head->one->one;
+    lru_time = tree3->tree_head->one->one->blk->last_access;
+  }
+  if((tree3->tree_head->one->two != NULL) && (tree3->tree_head->one->two->blk->last_access < lru_time)){
+    lru = tree3->tree_head->one->two;
+    lru_time = tree3->tree_head->one->two->blk->last_access;
+  }
+  if((tree3->tree_head->one->three != NULL) && (tree3->tree_head->one->three->blk->last_access < lru_time)){
+    lru = tree3->tree_head->one->three;
+    lru_time = tree3->tree_head->one->three->blk->last_access;
+  }
+  if((tree3->tree_head->two->one != NULL) && (tree3->tree_head->two->one->blk->last_access < lru_time)){
+    lru = tree3->tree_head->two->one;
+    lru_time = tree3->tree_head->two->one->blk->last_access;
+  }
+  if((tree3->tree_head->two->two != NULL) && (tree3->tree_head->two->two->blk->last_access < lru_time)){
+    lru = tree3->tree_head->two->two;
+    lru_time = tree3->tree_head->two->two->blk->last_access;
+  }
+  if((tree3->tree_head->two->three != NULL) && (tree3->tree_head->two->three->blk->last_access < lru_time)){
+    lru = tree3->tree_head->two->three;
+    lru_time = tree3->tree_head->two->three->blk->last_access;
+  }
+  if((tree3->tree_head->three->one != NULL) && (tree3->tree_head->three->one->blk->last_access < lru_time)){
+    lru = tree3->tree_head->three->one;
+    lru_time = tree3->tree_head->three->one->blk->last_access;
+  }
+  if((tree3->tree_head->three->two != NULL) && (tree3->tree_head->three->two->blk->last_access < lru_time)){
+    lru = tree3->tree_head->three->two;
+    lru_time = tree3->tree_head->three->two->blk->last_access;
+  }
+  if((tree3->tree_head->three->three != NULL) && (tree3->tree_head->three->three->blk->last_access < lru_time)){
+    lru = tree3->tree_head->three->three;
+    lru_time = tree3->tree_head->three->three->blk->last_access;
+  }
   if (((tree0->tree_head)->one != NULL) && (tree0->tree_head->one->blk->last_access < lru_time)){
     lru = (tree0->tree_head)->one;
     lru_time = tree0->tree_head->one->blk->last_access;
@@ -878,6 +985,42 @@ struct node_t * find_repl_node(struct cache_t *cp,
   if (((tree0->tree_head)->three != NULL) && (tree0->tree_head->three->blk->last_access < lru_time)){
     lru = (tree0->tree_head)->three;
     lru_time = tree0->tree_head->three->blk->last_access;
+  }
+  if((tree0->tree_head->one->one != NULL) && (tree0->tree_head->one->one->blk->last_access < lru_time)){
+    lru = tree0->tree_head->one->one;
+    lru_time = tree0->tree_head->one->one->blk->last_access;
+  }
+  if((tree0->tree_head->one->two != NULL) && (tree0->tree_head->one->two->blk->last_access < lru_time)){
+    lru = tree0->tree_head->one->two;
+    lru_time = tree0->tree_head->one->two->blk->last_access;
+  }
+  if((tree0->tree_head->one->three != NULL) && (tree0->tree_head->one->three->blk->last_access < lru_time)){
+    lru = tree0->tree_head->one->three;
+    lru_time = tree0->tree_head->one->three->blk->last_access;
+  }
+  if((tree0->tree_head->two->one != NULL) && (tree0->tree_head->two->one->blk->last_access < lru_time)){
+    lru = tree0->tree_head->two->one;
+    lru_time = tree0->tree_head->two->one->blk->last_access;
+  }
+  if((tree0->tree_head->two->two != NULL) && (tree0->tree_head->two->two->blk->last_access < lru_time)){
+    lru = tree0->tree_head->two->two;
+    lru_time = tree0->tree_head->two->two->blk->last_access;
+  }
+  if((tree0->tree_head->two->three != NULL) && (tree0->tree_head->two->three->blk->last_access < lru_time)){
+    lru = tree0->tree_head->two->three;
+    lru_time = tree0->tree_head->two->three->blk->last_access;
+  }
+  if((tree0->tree_head->three->one != NULL) && (tree0->tree_head->three->one->blk->last_access < lru_time)){
+    lru = tree0->tree_head->three->one;
+    lru_time = tree0->tree_head->three->one->blk->last_access;
+  }
+  if((tree0->tree_head->three->two != NULL) && (tree0->tree_head->three->two->blk->last_access < lru_time)){
+    lru = tree0->tree_head->three->two;
+    lru_time = tree0->tree_head->three->two->blk->last_access;
+  }
+  if((tree0->tree_head->three->three != NULL) && (tree0->tree_head->three->three->blk->last_access < lru_time)){
+    lru = tree0->tree_head->three->three;
+    lru_time = tree0->tree_head->three->three->blk->last_access;
   }
   if (lru == tree0->tree_head){
     lru->set = cp->nsets;
@@ -891,9 +1034,12 @@ struct node_t * find_repl_node(struct cache_t *cp,
   if (lru == tree3->tree_head){
     lru->set = cp->nsets;
   }
-
+  lru->rset = cp->nsets;
+  int i = 1;
   while (lru->parent != NULL){
     temp = lru->parent;
+    //printf("Loop %d\n", i);
+    //i++;
     if (lru->one == NULL && lru->two == NULL && lru->three == NULL){
       if(temp->way == 1){
 	if(lru->way == 1){
@@ -914,6 +1060,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[temp->set].way_tail = cp->sets[temp->set].way_four;
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -939,6 +1086,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -964,6 +1112,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -989,6 +1138,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1016,6 +1166,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1041,6 +1192,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1066,6 +1218,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1091,6 +1244,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_head = cp->sets[lru->set].way_one;
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1119,6 +1273,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1145,6 +1300,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1171,6 +1327,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1197,6 +1354,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1225,6 +1383,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1251,6 +1410,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1277,6 +1437,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1303,6 +1464,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	  cp->sets[lru->set].way_tail = cp->sets[lru->set].way_four;
 	  
 	  //lru->blk = cp->sets[temp->set].way_one;
+	  lru->rset = temp->set;
 	  lru->set = temp->set;
 	  lru->way = temp->way;
 	  temp->set = tset;
@@ -1321,6 +1483,15 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	temp->blk = tblk;
 	*/
 	lru->parent = temp->parent;
+	if(temp->parent->one == temp){
+	  lru->parent->one = lru;
+	}
+	else if(temp->parent->two == temp){
+	  lru->parent->two = lru;
+	}
+	else if(temp->parent->three == temp){
+	  lru->parent->three = lru;
+	}
 	lru->one = temp;
 	lru->two = temp->two;
 	lru->three = temp->three;
@@ -1330,6 +1501,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	lru->one->parent = lru;
 	lru->two->parent = lru;
 	lru->three->parent = lru;
+	//lru->parent->one = lru;
       }
       else if (temp->two == lru){
 	/*tset = lru->set;
@@ -1340,6 +1512,15 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	temp->blk = tblk;
 	*/
 	lru->parent = temp->parent;
+	if(temp->parent->one == temp){
+	  lru->parent->one = lru;
+	}
+	else if(temp->parent->two == temp){
+	  lru->parent->two = lru;
+	}
+	else if(temp->parent->three == temp){
+	  lru->parent->three = lru;
+	}
 	lru->two = temp;
 	lru->one = temp->one;
 	lru->three = temp->three;
@@ -1350,6 +1531,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	lru->one->parent = lru;
 	lru->two->parent = lru;
 	lru->three->parent = lru;
+	//lru->parent->two = lru;
       }
       else if (temp->three == lru){
 	/*tset = lru->set;
@@ -1360,6 +1542,15 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	temp->blk = tblk;
 	*/
 	lru->parent = temp->parent;
+	if(temp->parent->one == temp){
+	  lru->parent->one = lru;
+	}
+	else if(temp->parent->two == temp){
+	  lru->parent->two = lru;
+	}
+	else if(temp->parent->three == temp){
+	  lru->parent->three = lru;
+	}
 	lru->three = temp;
 	lru->two = temp->two;
 	lru->one = temp->one;
@@ -1370,6 +1561,7 @@ struct node_t * find_repl_node(struct cache_t *cp,
 	lru->one->parent = lru;
 	lru->two->parent = lru;
 	lru->three->parent = lru;
+	//lru->parent->three = lru;
       }
     }
     else{
@@ -1881,48 +2073,132 @@ struct node_t * find_repl_node(struct cache_t *cp,
 static void delTree(struct cache_tree_t *t0, struct cache_tree_t *t1, struct cache_tree_t *t2, struct cache_tree_t *t3){
   if(t0 != NULL){
     if(t0->tree_head != NULL){
-      if(t0->tree_head->one != NULL)
+      if(t0->tree_head->one != NULL){
+	if(t0->tree_head->one->one != NULL)
+	  free(t0->tree_head->one->one);
+	if(t0->tree_head->one->two != NULL)
+	  free(t0->tree_head->one->two);
+	if(t0->tree_head->one->three != NULL)
+	  free(t0->tree_head->one->three);
 	free(t0->tree_head->one);
-      if(t0->tree_head->two != NULL)
+      }
+      if(t0->tree_head->two != NULL){
+	if(t0->tree_head->two->one != NULL)
+	  free(t0->tree_head->two->one);
+	if(t0->tree_head->two->two != NULL)
+	  free(t0->tree_head->two->two);
+	if(t0->tree_head->two->three != NULL)
+	  free(t0->tree_head->two->three);
 	free(t0->tree_head->two);
-      if(t0->tree_head->three != NULL)
+      }
+      if(t0->tree_head->three != NULL){
+	if(t0->tree_head->three->one != NULL)
+	  free(t0->tree_head->three->one);
+	if(t0->tree_head->three->two != NULL)
+	  free(t0->tree_head->three->two);
+	if(t0->tree_head->three->three != NULL)
+	  free(t0->tree_head->three->three);
 	free(t0->tree_head->three);
+      }
       free(t0->tree_head);
     }
     free(t0);
   }
   if(t1 != NULL){
     if(t1->tree_head != NULL){
-      if(t1->tree_head->one != NULL)
+      if(t1->tree_head->one != NULL){
+	if(t1->tree_head->one->one != NULL)
+	  free(t1->tree_head->one->one);
+	if(t1->tree_head->one->two != NULL)
+	  free(t1->tree_head->one->two);
+	if(t1->tree_head->one->three != NULL)
+	  free(t1->tree_head->one->three);
 	free(t1->tree_head->one);
-      if(t1->tree_head->two != NULL)
+      }
+      if(t1->tree_head->two != NULL){
+	if(t1->tree_head->two->one != NULL)
+	  free(t1->tree_head->two->one);
+	if(t1->tree_head->two->two != NULL)
+	  free(t1->tree_head->two->two);
+	if(t1->tree_head->two->three != NULL)
+	  free(t1->tree_head->two->three);
 	free(t1->tree_head->two);
-      if(t1->tree_head->three != NULL)
+      }
+      if(t1->tree_head->three != NULL){
+	if(t1->tree_head->three->one != NULL)
+	  free(t1->tree_head->three->one);
+	if(t1->tree_head->three->two != NULL)
+	  free(t1->tree_head->three->two);
+	if(t1->tree_head->three->three != NULL)
+	  free(t1->tree_head->three->three);
 	free(t1->tree_head->three);
+      }
       free(t1->tree_head);
     }
     free(t1);
   }
   if(t2 != NULL){
     if(t2->tree_head != NULL){
-      if(t2->tree_head->one != NULL)
+      if(t2->tree_head->one != NULL){
+	if(t2->tree_head->one->one != NULL)
+	  free(t2->tree_head->one->one);
+	if(t2->tree_head->one->two != NULL)
+	  free(t2->tree_head->one->two);
+	if(t2->tree_head->one->three != NULL)
+	  free(t2->tree_head->one->three);
 	free(t2->tree_head->one);
-      if(t2->tree_head->two != NULL)
+      }
+      if(t2->tree_head->two != NULL){
+	if(t2->tree_head->two->one != NULL)
+	  free(t2->tree_head->two->one);
+	if(t2->tree_head->two->two != NULL)
+	  free(t2->tree_head->two->two);
+	if(t2->tree_head->two->three != NULL)
+	  free(t2->tree_head->two->three);
 	free(t2->tree_head->two);
-      if(t2->tree_head->three != NULL)
+      }
+      if(t2->tree_head->three != NULL){
+	if(t2->tree_head->three->one != NULL)
+	  free(t2->tree_head->three->one);
+	if(t2->tree_head->three->two != NULL)
+	  free(t2->tree_head->three->two);
+	if(t2->tree_head->three->three != NULL)
+	  free(t2->tree_head->three->three);
 	free(t2->tree_head->three);
+      }
       free(t2->tree_head);
     }
     free(t2);
   }
   if(t3 != NULL){
     if(t3->tree_head != NULL){
-      if(t3->tree_head->one != NULL)
+      if(t3->tree_head->one != NULL){
+	if(t3->tree_head->one->one != NULL)
+	  free(t3->tree_head->one->one);
+	if(t3->tree_head->one->two != NULL)
+	  free(t3->tree_head->one->two);
+	if(t3->tree_head->one->three != NULL)
+	  free(t3->tree_head->one->three);
 	free(t3->tree_head->one);
-      if(t3->tree_head->two != NULL)
+      }
+      if(t3->tree_head->two != NULL){
+	if(t3->tree_head->two->one != NULL)
+	  free(t3->tree_head->two->one);
+	if(t3->tree_head->two->two != NULL)
+	  free(t3->tree_head->two->two);
+	if(t3->tree_head->two->three != NULL)
+	  free(t3->tree_head->two->three);
 	free(t3->tree_head->two);
-      if(t3->tree_head->three != NULL)
+      }
+      if(t3->tree_head->three != NULL){
+	if(t3->tree_head->three->one != NULL)
+	  free(t3->tree_head->three->one);
+	if(t3->tree_head->three->two != NULL)
+	  free(t3->tree_head->three->two);
+	if(t3->tree_head->three->three != NULL)
+	  free(t3->tree_head->three->three);
 	free(t3->tree_head->three);
+      }
       free(t3->tree_head);
     }
     free(t3);
@@ -1950,14 +2226,14 @@ cache_access(struct cache_t *cp,	/* cache to access */
   md_addr_t tag = CACHE_TAG(cp, addr);
   md_addr_t set = CACHE_SET(cp, addr);
   md_addr_t bofs = CACHE_BLK(cp, addr);
-  md_addr_t ha, ta;
-  struct cache_blk_t *blk, *repl, *temp, *w0, *w1, *w2, *w3, *w;
+  md_addr_t ha, ta, taa;
+  struct cache_blk_t *blk, *repl, *temp, *w0, *w1, *w2, *w3, *w, *w00, *w01, *w02, *w03, *w10, *w11, *w12, *w13, *w20, *w21, *w22, *w23, *w30, *w31, *w32, *w33 ;
   int lat = 0;
   int rep_lat = 0;
   struct cache_tree_t *repl_cand0, *repl_cand1, *repl_cand2, *repl_cand3;
   struct node_t *repl_node;
   //  md_addr_t *temp_addr;
-  int hset0, hset1, hset2, hset3, hrepl, h0, h1, h2, h3;
+  int hset0, hset1, hset2, hset3, hrepl, h0, h1, h2, h3, h00, h01, h02, h03, h10, h11, h12, h13, h20, h21, h22, h23, h30, h31, h32, h33;
   //  int i=0;
   //int j=0;
 
@@ -2069,6 +2345,14 @@ cache_access(struct cache_t *cp,	/* cache to access */
     hset2 = CACHE_SET(cp,ha)%(cp->nsets);
     ha = CACHE_HASH4(cp, ta);
     hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    //h00 = h0;
+    h01 = hset1;
+    h02 = hset2;
+    h03 = hset3;
+    //w00 = cp->sets[h0].way_one;
+    w01 = cp->sets[hset1].way_two;
+    w02 = cp->sets[hset2].way_three;
+    w03 = cp->sets[hset3].way_four;
     blk = cp->sets[hset1].way_two;
     if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
       //      rep_lat += cp->hit_latency;
@@ -2091,6 +2375,14 @@ cache_access(struct cache_t *cp,	/* cache to access */
     hset2 = CACHE_SET(cp,ha)%(cp->nsets);
     ha = CACHE_HASH4(cp, ta);
     hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    //h00 = h0;
+    h10 = hset0;
+    h12 = hset2;
+    h13 = hset3;
+    //w00 = cp->sets[h0].way_one;
+    w10 = cp->sets[hset0].way_one;
+    w12 = cp->sets[hset2].way_three;
+    w13 = cp->sets[hset3].way_four;
     blk = cp->sets[hset0].way_one;
     if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
       //rep_lat += 2*cp->hit_latency;
@@ -2113,6 +2405,14 @@ cache_access(struct cache_t *cp,	/* cache to access */
     hset1 = CACHE_SET(cp,ha)%(cp->nsets);
     ha = CACHE_HASH4(cp, ta);
     hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    //h00 = h0;
+    h20 = hset0;
+    h21 = hset1;
+    h23 = hset3;
+    //w00 = cp->sets[h0].way_one;
+    w20 = cp->sets[hset0].way_one;
+    w21 = cp->sets[hset1].way_two;
+    w23 = cp->sets[hset3].way_four;
     blk = cp->sets[hset0].way_one;
     if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
       //rep_lat += 3*cp->hit_latency;
@@ -2135,6 +2435,14 @@ cache_access(struct cache_t *cp,	/* cache to access */
     hset1 = CACHE_SET(cp,ha)%(cp->nsets);
     ha = CACHE_HASH3(cp, ta);
     hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    //h00 = h0;
+    h30 = hset0;
+    h31 = hset1;
+    h32 = hset2;
+    //w00 = cp->sets[h0].way_one;
+    w30 = cp->sets[hset0].way_one;
+    w31 = cp->sets[hset1].way_two;
+    w32 = cp->sets[hset2].way_three;
     blk = cp->sets[hset0].way_one;
     if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
       //rep_lat += 4*cp->hit_latency;
@@ -2148,6 +2456,272 @@ cache_access(struct cache_t *cp,	/* cache to access */
     blk = cp->sets[hset2].way_three;
     if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
       //rep_lat += 4*cp->hit_latency;
+      goto cache_hit;
+    }
+
+
+    ta = CACHE_MK_BADDR(cp, w01->tag, h01);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w02->tag, h02);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w03->tag, h03);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w10->tag, h10);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w12->tag, h12);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w13->tag, h13);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w20->tag, h20);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w21->tag, h21);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w23->tag, h23);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w30->tag, h30);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w31->tag, h31);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH3(cp, ta);
+    hset2 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset2].way_three;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    ta = CACHE_MK_BADDR(cp, w32->tag, h32);
+    ha = CACHE_HASH1(cp, ta);
+    hset0 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH2(cp, ta);
+    hset1 = CACHE_SET(cp,ha)%(cp->nsets);
+    ha = CACHE_HASH4(cp, ta);
+    hset3 = CACHE_SET(cp,ha)%(cp->nsets);
+    blk = cp->sets[hset0].way_one;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //      rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset1].way_two;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      // rep_lat += cp->hit_latency;
+      goto cache_hit;
+    }
+    blk = cp->sets[hset3].way_four;
+    if((blk->tag == tag && (blk->status & CACHE_BLK_VALID))){
+      //rep_lat += cp->hit_latency;
       goto cache_hit;
     }
   }
@@ -2221,6 +2795,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand0->tree_head->one->three = NULL;
 	repl_cand0->tree_head->one->set = hset1;
 	repl_cand0->tree_head->one->way = 2;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset1);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h0].way_one != NULL)){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand0->tree_head->one->one = malloc(sizeof(*(repl_cand0->tree_head->one->one)));
+	  //repl_cand0->tree_head->one = realloc(repl_cand0->tree_head->one, sizeof(*(repl_cand0->tree_head->one)));
+	  repl_cand0->tree_head->one->one->blk = temp;
+	  //(repl_cand0.tree_head)->one = temp;
+	  repl_cand0->tree_head->one->one->parent = repl_cand0->tree_head->one;
+	  repl_cand0->tree_head->one->one->one = NULL;
+	  repl_cand0->tree_head->one->one->two = NULL;
+	  repl_cand0->tree_head->one->one->three = NULL;
+	  repl_cand0->tree_head->one->one->set = h0;
+	  repl_cand0->tree_head->one->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand0->tree_head->one->two = malloc(sizeof(*(repl_cand0->tree_head->one->two)));
+	  //repl_cand0->tree_head->two = realloc(repl_cand0->tree_head->two, sizeof(*(repl_cand0->tree_head->two)));
+	  repl_cand0->tree_head->one->two->blk = temp;
+	  //(repl_cand0.tree_head)->two = temp;
+	  repl_cand0->tree_head->one->two->parent = repl_cand0->tree_head->one;
+	  repl_cand0->tree_head->one->two->one = NULL;
+	  repl_cand0->tree_head->one->two->two = NULL;
+	  repl_cand0->tree_head->one->two->three = NULL;
+	  repl_cand0->tree_head->one->two->set = h2;
+	  repl_cand0->tree_head->one->two->way = 3;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand0->tree_head->one->three = malloc(sizeof(*(repl_cand0->tree_head->one->three)));
+	  //repl_cand0->tree_head->three = realloc(repl_cand0->tree_head->three, sizeof(*(repl_cand0->tree_head->three)));
+	  repl_cand0->tree_head->one->three->blk = temp;
+	  //(repl_cand0.tree_head)->three = temp;
+	  repl_cand0->tree_head->one->three->parent = repl_cand0->tree_head->one;
+	  repl_cand0->tree_head->one->three->one = NULL;
+	  repl_cand0->tree_head->one->three->two = NULL;
+	  repl_cand0->tree_head->one->three->three = NULL;
+	  repl_cand0->tree_head->one->three->set = h3;
+	  repl_cand0->tree_head->one->three->way = 4;
+	}
+	else {
+	  //	repl = cp->sets[hset3].way_four;
+	  //hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset1].way_two;
@@ -2239,6 +2876,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand0->tree_head->two->three = NULL;
 	repl_cand0->tree_head->two->set = hset2;
 	repl_cand0->tree_head->two->way = 3;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset2);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h0].way_one != NULL)){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand0->tree_head->two->one = malloc(sizeof(*(repl_cand0->tree_head->two->one)));
+	  //repl_cand0->tree_head->one = realloc(repl_cand0->tree_head->one, sizeof(*(repl_cand0->tree_head->one)));
+	  repl_cand0->tree_head->two->one->blk = temp;
+	  //(repl_cand0.tree_head)->one = temp;
+	  repl_cand0->tree_head->two->one->parent = repl_cand0->tree_head->two;
+	  repl_cand0->tree_head->two->one->one = NULL;
+	  repl_cand0->tree_head->two->one->two = NULL;
+	  repl_cand0->tree_head->two->one->three = NULL;
+	  repl_cand0->tree_head->two->one->set = h0;
+	  repl_cand0->tree_head->two->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand0->tree_head->two->two = malloc(sizeof(*(repl_cand0->tree_head->two->two)));
+	  //repl_cand0->tree_head->two = realloc(repl_cand0->tree_head->two, sizeof(*(repl_cand0->tree_head->two)));
+	  repl_cand0->tree_head->two->two->blk = temp;
+	  //(repl_cand0.tree_head)->two = temp;
+	  repl_cand0->tree_head->two->two->parent = repl_cand0->tree_head->two;
+	  repl_cand0->tree_head->two->two->one = NULL;
+	  repl_cand0->tree_head->two->two->two = NULL;
+	  repl_cand0->tree_head->two->two->three = NULL;
+	  repl_cand0->tree_head->two->two->set = h1;
+	  repl_cand0->tree_head->two->two->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand0->tree_head->two->three = malloc(sizeof(*(repl_cand0->tree_head->two->three)));
+	  //repl_cand0->tree_head->three = realloc(repl_cand0->tree_head->three, sizeof(*(repl_cand0->tree_head->three)));
+	  repl_cand0->tree_head->two->three->blk = temp;
+	  //(repl_cand0.tree_head)->three = temp;
+	  repl_cand0->tree_head->two->three->parent = repl_cand0->tree_head->two;
+	  repl_cand0->tree_head->two->three->one = NULL;
+	  repl_cand0->tree_head->two->three->two = NULL;
+	  repl_cand0->tree_head->two->three->three = NULL;
+	  repl_cand0->tree_head->two->three->set = h3;
+	  repl_cand0->tree_head->two->three->way = 4;
+	}
+	else {
+	  //	repl = cp->sets[hset3].way_four;
+	  //hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset2].way_three;
@@ -2257,6 +2957,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand0->tree_head->three->three = NULL;
 	repl_cand0->tree_head->three->set = hset3;
 	repl_cand0->tree_head->three->way = 4;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset3);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h0].way_one != NULL)){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand0->tree_head->three->one = malloc(sizeof(*(repl_cand0->tree_head->three->one)));
+	  //repl_cand0->tree_head->one = realloc(repl_cand0->tree_head->one, sizeof(*(repl_cand0->tree_head->one)));
+	  repl_cand0->tree_head->three->one->blk = temp;
+	  //(repl_cand0.tree_head)->one = temp;
+	  repl_cand0->tree_head->three->one->parent = repl_cand0->tree_head->three;
+	  repl_cand0->tree_head->three->one->one = NULL;
+	  repl_cand0->tree_head->three->one->two = NULL;
+	  repl_cand0->tree_head->three->one->three = NULL;
+	  repl_cand0->tree_head->three->one->set = h0;
+	  repl_cand0->tree_head->three->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand0->tree_head->three->two = malloc(sizeof(*(repl_cand0->tree_head->three->two)));
+	  //repl_cand0->tree_head->two = realloc(repl_cand0->tree_head->two, sizeof(*(repl_cand0->tree_head->two)));
+	  repl_cand0->tree_head->three->two->blk = temp;
+	  //(repl_cand0.tree_head)->two = temp;
+	  repl_cand0->tree_head->three->two->parent = repl_cand0->tree_head->three;
+	  repl_cand0->tree_head->three->two->one = NULL;
+	  repl_cand0->tree_head->three->two->two = NULL;
+	  repl_cand0->tree_head->three->two->three = NULL;
+	  repl_cand0->tree_head->three->two->set = h1;
+	  repl_cand0->tree_head->three->two->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand0->tree_head->three->three = malloc(sizeof(*(repl_cand0->tree_head->three->three)));
+	  //repl_cand0->tree_head->three = realloc(repl_cand0->tree_head->three, sizeof(*(repl_cand0->tree_head->three)));
+	  repl_cand0->tree_head->three->three->blk = temp;
+	  //(repl_cand0.tree_head)->three = temp;
+	  repl_cand0->tree_head->three->three->parent = repl_cand0->tree_head->three;
+	  repl_cand0->tree_head->three->three->one = NULL;
+	  repl_cand0->tree_head->three->three->two = NULL;
+	  repl_cand0->tree_head->three->three->three = NULL;
+	  repl_cand0->tree_head->three->three->set = h2;
+	  repl_cand0->tree_head->three->three->way = 3;
+	}
+	else {
+	  //	repl = cp->sets[hset3].way_four;
+	  //hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//	repl = cp->sets[hset3].way_four;
@@ -2288,9 +3051,9 @@ cache_access(struct cache_t *cp,	/* cache to access */
       repl_cand1->tree_head->set = hset1;
       repl_cand1->tree_head->way = 2;
       /*hset0 = CACHE_HASH1(cp, hset1);
-      hset1 = CACHE_HASH2(cp, hset1);
-      hset2 = CACHE_HASH3(cp, hset1);
-      hset3 = CACHE_HASH4(cp, hset1);*/
+	hset1 = CACHE_HASH2(cp, hset1);
+	hset2 = CACHE_HASH3(cp, hset1);
+	hset3 = CACHE_HASH4(cp, hset1);*/
       ta = CACHE_MK_BADDR(cp, temp->tag, hset1);
       ha = CACHE_HASH1(cp, ta);
       hset0 = CACHE_SET(cp,ha)%(cp->nsets);
@@ -2313,6 +3076,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand1->tree_head->one->three = NULL;
 	repl_cand1->tree_head->one->set = hset0;
 	repl_cand1->tree_head->one->way = 1;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset0);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if(cp->sets[h1].way_two != NULL){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand1->tree_head->one->one = malloc(sizeof(*(repl_cand1->tree_head->one->one)));
+	  //repl_cand1->tree_head->one = realloc(repl_cand1->tree_head->one, sizeof(*(repl_cand1->tree_head->one)));
+	  repl_cand1->tree_head->one->one->blk = temp;
+	  //(repl_cand1.tree_head)->one = temp;
+	  repl_cand1->tree_head->one->one->parent = repl_cand1->tree_head->one;
+	  repl_cand1->tree_head->one->one->one = NULL;
+	  repl_cand1->tree_head->one->one->two = NULL;
+	  repl_cand1->tree_head->one->one->three = NULL;
+	  repl_cand1->tree_head->one->one->set = h1;
+	  repl_cand1->tree_head->one->one->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand1->tree_head->one->two = malloc(sizeof(*(repl_cand1->tree_head->one->two)));
+	  //repl_cand1->tree_head->two = realloc(repl_cand1->tree_head->two, sizeof(*(repl_cand1->tree_head->two)));
+	  repl_cand1->tree_head->one->two->blk = temp;
+	  //(repl_cand1.tree_head)->two = temp;
+	  repl_cand1->tree_head->one->two->parent = repl_cand1->tree_head->one;
+	  repl_cand1->tree_head->one->two->one = NULL;
+	  repl_cand1->tree_head->one->two->two = NULL;
+	  repl_cand1->tree_head->one->two->three = NULL;
+	  repl_cand1->tree_head->one->two->set = h2;
+	  repl_cand1->tree_head->one->two->way = 3;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand1->tree_head->one->three = malloc(sizeof(*(repl_cand1->tree_head->one->three)));
+	  //repl_cand1->tree_head->three = realloc(repl_cand1->tree_head->three, sizeof(*(repl_cand1->tree_head->three)));
+	  repl_cand1->tree_head->one->three->blk = temp;
+	  //(repl_cand1.tree_head)->three = temp;
+	  repl_cand1->tree_head->one->three->parent = repl_cand1->tree_head->one;
+	  repl_cand1->tree_head->one->three->one = NULL;
+	  repl_cand1->tree_head->one->three->two = NULL;
+	  repl_cand1->tree_head->one->three->three = NULL;
+	  repl_cand1->tree_head->one->three->set = h3;
+	  repl_cand1->tree_head->one->three->way = 4;
+	}
+	else {
+	  //	repl = cp->sets[hset3].way_four;
+	  //	hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset0].way_one;
@@ -2331,6 +3157,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand1->tree_head->two->three = NULL;
 	repl_cand1->tree_head->two->set = hset2;
 	repl_cand1->tree_head->two->way = 3;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset2);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if(cp->sets[h0].way_one != NULL){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand1->tree_head->two->one = malloc(sizeof(*(repl_cand1->tree_head->two->one)));
+	  //repl_cand1->tree_head->one = realloc(repl_cand1->tree_head->one, sizeof(*(repl_cand1->tree_head->one)));
+	  repl_cand1->tree_head->two->one->blk = temp;
+	  //(repl_cand1.tree_head)->one = temp;
+	  repl_cand1->tree_head->two->one->parent = repl_cand1->tree_head->two;
+	  repl_cand1->tree_head->two->one->one = NULL;
+	  repl_cand1->tree_head->two->one->two = NULL;
+	  repl_cand1->tree_head->two->one->three = NULL;
+	  repl_cand1->tree_head->two->one->set = h0;
+	  repl_cand1->tree_head->two->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand1->tree_head->two->two = malloc(sizeof(*(repl_cand1->tree_head->two->two)));
+	  //repl_cand1->tree_head->two = realloc(repl_cand1->tree_head->two, sizeof(*(repl_cand1->tree_head->two)));
+	  repl_cand1->tree_head->two->two->blk = temp;
+	  //(repl_cand1.tree_head)->two = temp;
+	  repl_cand1->tree_head->two->two->parent = repl_cand1->tree_head->two;
+	  repl_cand1->tree_head->two->two->one = NULL;
+	  repl_cand1->tree_head->two->two->two = NULL;
+	  repl_cand1->tree_head->two->two->three = NULL;
+	  repl_cand1->tree_head->two->two->set = h1;
+	  repl_cand1->tree_head->two->two->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand1->tree_head->two->three = malloc(sizeof(*(repl_cand1->tree_head->two->three)));
+	  //repl_cand1->tree_head->three = realloc(repl_cand1->tree_head->three, sizeof(*(repl_cand1->tree_head->three)));
+	  repl_cand1->tree_head->two->three->blk = temp;
+	  //(repl_cand1.tree_head)->three = temp;
+	  repl_cand1->tree_head->two->three->parent = repl_cand1->tree_head->two;
+	  repl_cand1->tree_head->two->three->one = NULL;
+	  repl_cand1->tree_head->two->three->two = NULL;
+	  repl_cand1->tree_head->two->three->three = NULL;
+	  repl_cand1->tree_head->two->three->set = h3;
+	  repl_cand1->tree_head->two->three->way = 4;
+	}
+	else {
+	  //	repl = cp->sets[hset3].way_four;
+	  //	hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset2].way_three;
@@ -2349,6 +3238,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand1->tree_head->three->three = NULL;
 	repl_cand1->tree_head->three->set = hset3;
 	repl_cand1->tree_head->three->way = 4;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset3);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if(cp->sets[h0].way_one != NULL){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand1->tree_head->three->one = malloc(sizeof(*(repl_cand1->tree_head->three->one)));
+	  //repl_cand1->tree_head->one = realloc(repl_cand1->tree_head->one, sizeof(*(repl_cand1->tree_head->one)));
+	  repl_cand1->tree_head->three->one->blk = temp;
+	  //(repl_cand1.tree_head)->one = temp;
+	  repl_cand1->tree_head->three->one->parent = repl_cand1->tree_head->three;
+	  repl_cand1->tree_head->three->one->one = NULL;
+	  repl_cand1->tree_head->three->one->two = NULL;
+	  repl_cand1->tree_head->three->one->three = NULL;
+	  repl_cand1->tree_head->three->one->set = h0;
+	  repl_cand1->tree_head->three->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand1->tree_head->three->two = malloc(sizeof(*(repl_cand1->tree_head->three->two)));
+	  //repl_cand1->tree_head->two = realloc(repl_cand1->tree_head->two, sizeof(*(repl_cand1->tree_head->two)));
+	  repl_cand1->tree_head->three->two->blk = temp;
+	  //(repl_cand1.tree_head)->two = temp;
+	  repl_cand1->tree_head->three->two->parent = repl_cand1->tree_head->three;
+	  repl_cand1->tree_head->three->two->one = NULL;
+	  repl_cand1->tree_head->three->two->two = NULL;
+	  repl_cand1->tree_head->three->two->three = NULL;
+	  repl_cand1->tree_head->three->two->set = h1;
+	  repl_cand1->tree_head->three->two->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand1->tree_head->three->three = malloc(sizeof(*(repl_cand1->tree_head->three->three)));
+	  //repl_cand1->tree_head->three = realloc(repl_cand1->tree_head->three, sizeof(*(repl_cand1->tree_head->three)));
+	  repl_cand1->tree_head->three->three->blk = temp;
+	  //(repl_cand1.tree_head)->three = temp;
+	  repl_cand1->tree_head->three->three->parent = repl_cand1->tree_head->three;
+	  repl_cand1->tree_head->three->three->one = NULL;
+	  repl_cand1->tree_head->three->three->two = NULL;
+	  repl_cand1->tree_head->three->three->three = NULL;
+	  repl_cand1->tree_head->three->three->set = h2;
+	  repl_cand1->tree_head->three->three->way = 3;
+	}
+	else {
+	  //	repl = cp->sets[hset3].way_four;
+	  //	hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//	repl = cp->sets[hset3].way_four;
@@ -2380,9 +3332,9 @@ cache_access(struct cache_t *cp,	/* cache to access */
       repl_cand2->tree_head->set = hset2;
       repl_cand2->tree_head->way = 3;
       /*hset0 = CACHE_HASH1(cp, hset2);
-      hset1 = CACHE_HASH2(cp, hset2);
-      hset2 = CACHE_HASH3(cp, hset2);
-      hset3 = CACHE_HASH4(cp, hset2);
+	hset1 = CACHE_HASH2(cp, hset2);
+	hset2 = CACHE_HASH3(cp, hset2);
+	hset3 = CACHE_HASH4(cp, hset2);
       */
       ta = CACHE_MK_BADDR(cp, temp->tag, hset2);
       ha = CACHE_HASH1(cp, ta);
@@ -2406,6 +3358,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand2->tree_head->one->three = NULL;
 	repl_cand2->tree_head->one->set = hset0;
 	repl_cand2->tree_head->one->way = 1;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset0);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand2->tree_head->one->one = malloc(sizeof(*(repl_cand2->tree_head->one->one)));
+	  //repl_cand2->tree_head->one = realloc(repl_cand2->tree_head->one, sizeof(*(repl_cand2->tree_head->one)));
+	  repl_cand2->tree_head->one->one->blk = temp;
+	  //(repl_cand2.tree_head)->one = temp;
+	  repl_cand2->tree_head->one->one->parent = repl_cand2->tree_head->one;
+	  repl_cand2->tree_head->one->one->one = NULL;
+	  repl_cand2->tree_head->one->one->two = NULL;
+	  repl_cand2->tree_head->one->one->three = NULL;
+	  repl_cand2->tree_head->one->one->set = h1;
+	  repl_cand2->tree_head->one->one->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	} 
+	if((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand2->tree_head->one->two = malloc(sizeof(*(repl_cand2->tree_head->one->two)));
+	  //repl_cand2->tree_head->two = realloc(repl_cand2->tree_head->two, sizeof(*(repl_cand2->tree_head->two)));
+	  repl_cand2->tree_head->one->two->blk = temp;
+	  //(repl_cand2.tree_head)->two = temp;
+	  repl_cand2->tree_head->one->two->parent = repl_cand2->tree_head->one;
+	  repl_cand2->tree_head->one->two->one = NULL;
+	  repl_cand2->tree_head->one->two->two = NULL;
+	  repl_cand2->tree_head->one->two->three = NULL;
+	  repl_cand2->tree_head->one->two->set = h2;
+	  repl_cand2->tree_head->one->two->way = 3;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand2->tree_head->one->three = malloc(sizeof(*(repl_cand2->tree_head->one->three)));
+	  //repl_cand2->tree_head->three = realloc(repl_cand2->tree_head->three, sizeof(*(repl_cand2->tree_head->three)));
+	  repl_cand2->tree_head->one->three->blk = temp;
+	  //(repl_cand2.tree_head)->three = temp;
+	  repl_cand2->tree_head->one->three->parent = repl_cand2->tree_head->one;
+	  repl_cand2->tree_head->one->three->one = NULL;
+	  repl_cand2->tree_head->one->three->two = NULL;
+	  repl_cand2->tree_head->one->three->three = NULL;
+	  repl_cand2->tree_head->one->three->set = h3;
+	  repl_cand2->tree_head->one->three->way = 4;
+	}
+	else {
+	  //repl = cp->sets[hset3].way_four;
+	  //hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset0].way_one;
@@ -2424,6 +3439,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand2->tree_head->two->three = NULL;
 	repl_cand2->tree_head->two->set = hset1;
 	repl_cand2->tree_head->two->way = 2;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset1);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h0].way_one != NULL)){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand2->tree_head->two->one = malloc(sizeof(*(repl_cand2->tree_head->two->one)));
+	  //repl_cand2->tree_head->one = realloc(repl_cand2->tree_head->one, sizeof(*(repl_cand2->tree_head->one)));
+	  repl_cand2->tree_head->two->one->blk = temp;
+	  //(repl_cand2.tree_head)->one = temp;
+	  repl_cand2->tree_head->two->one->parent = repl_cand2->tree_head->two;
+	  repl_cand2->tree_head->two->one->one = NULL;
+	  repl_cand2->tree_head->two->one->two = NULL;
+	  repl_cand2->tree_head->two->one->three = NULL;
+	  repl_cand2->tree_head->two->one->set = h0;
+	  repl_cand2->tree_head->two->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	} 
+	if((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand2->tree_head->two->two = malloc(sizeof(*(repl_cand2->tree_head->two->two)));
+	  //repl_cand2->tree_head->two = realloc(repl_cand2->tree_head->two, sizeof(*(repl_cand2->tree_head->two)));
+	  repl_cand2->tree_head->two->two->blk = temp;
+	  //(repl_cand2.tree_head)->two = temp;
+	  repl_cand2->tree_head->two->two->parent = repl_cand2->tree_head->two;
+	  repl_cand2->tree_head->two->two->one = NULL;
+	  repl_cand2->tree_head->two->two->two = NULL;
+	  repl_cand2->tree_head->two->two->three = NULL;
+	  repl_cand2->tree_head->two->two->set = h2;
+	  repl_cand2->tree_head->two->two->way = 3;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand2->tree_head->two->three = malloc(sizeof(*(repl_cand2->tree_head->two->three)));
+	  //repl_cand2->tree_head->three = realloc(repl_cand2->tree_head->three, sizeof(*(repl_cand2->tree_head->three)));
+	  repl_cand2->tree_head->two->three->blk = temp;
+	  //(repl_cand2.tree_head)->three = temp;
+	  repl_cand2->tree_head->two->three->parent = repl_cand2->tree_head->two;
+	  repl_cand2->tree_head->two->three->one = NULL;
+	  repl_cand2->tree_head->two->three->two = NULL;
+	  repl_cand2->tree_head->two->three->three = NULL;
+	  repl_cand2->tree_head->two->three->set = h3;
+	  repl_cand2->tree_head->two->three->way = 4;
+	}
+	else {
+	  //repl = cp->sets[hset3].way_four;
+	  //hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset1].way_two;
@@ -2442,6 +3520,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand2->tree_head->three->three = NULL;
 	repl_cand2->tree_head->three->set = hset3;
 	repl_cand2->tree_head->three->way = 4;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset3);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h0].way_one != NULL)){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand2->tree_head->three->one = malloc(sizeof(*(repl_cand2->tree_head->three->one)));
+	  //repl_cand2->tree_head->one = realloc(repl_cand2->tree_head->one, sizeof(*(repl_cand2->tree_head->one)));
+	  repl_cand2->tree_head->three->one->blk = temp;
+	  //(repl_cand2.tree_head)->one = temp;
+	  repl_cand2->tree_head->three->one->parent = repl_cand2->tree_head->three;
+	  repl_cand2->tree_head->three->one->one = NULL;
+	  repl_cand2->tree_head->three->one->two = NULL;
+	  repl_cand2->tree_head->three->one->three = NULL;
+	  repl_cand2->tree_head->three->one->set = h0;
+	  repl_cand2->tree_head->three->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	} 
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand2->tree_head->three->two = malloc(sizeof(*(repl_cand2->tree_head->three->two)));
+	  //repl_cand2->tree_head->two = realloc(repl_cand2->tree_head->two, sizeof(*(repl_cand2->tree_head->two)));
+	  repl_cand2->tree_head->three->two->blk = temp;
+	  //(repl_cand2.tree_head)->two = temp;
+	  repl_cand2->tree_head->three->two->parent = repl_cand2->tree_head->three;
+	  repl_cand2->tree_head->three->two->one = NULL;
+	  repl_cand2->tree_head->three->two->two = NULL;
+	  repl_cand2->tree_head->three->two->three = NULL;
+	  repl_cand2->tree_head->three->two->set = h1;
+	  repl_cand2->tree_head->three->two->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if ((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand2->tree_head->three->three = malloc(sizeof(*(repl_cand2->tree_head->three->three)));
+	  //repl_cand2->tree_head->three = realloc(repl_cand2->tree_head->three, sizeof(*(repl_cand2->tree_head->three)));
+	  repl_cand2->tree_head->three->three->blk = temp;
+	  //(repl_cand2.tree_head)->three = temp;
+	  repl_cand2->tree_head->three->three->parent = repl_cand2->tree_head->three;
+	  repl_cand2->tree_head->three->three->one = NULL;
+	  repl_cand2->tree_head->three->three->two = NULL;
+	  repl_cand2->tree_head->three->three->three = NULL;
+	  repl_cand2->tree_head->three->three->set = h2;
+	  repl_cand2->tree_head->three->three->way = 3;
+	}
+	else {
+	  //repl = cp->sets[hset3].way_four;
+	  //hrepl = hset3;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset3].way_four;
@@ -2455,7 +3596,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
       //goto miss_handler;
     }
     
-  //Fourth tree
+    //Fourth tree
     //    ta = CACHE_BADDR(cp, addr);
     ha = CACHE_HASH4(cp, addr);
     hset3 = CACHE_SET(cp, ha)%(cp->nsets);
@@ -2472,9 +3613,9 @@ cache_access(struct cache_t *cp,	/* cache to access */
       repl_cand3->tree_head->set = hset3;
       repl_cand3->tree_head->way = 4;
       /*hset0 = CACHE_HASH1(cp, hset3);
-      hset1 = CACHE_HASH2(cp, hset3);
-      hset2 = CACHE_HASH3(cp, hset3);
-      hset3 = CACHE_HASH4(cp, hset3);*/
+	hset1 = CACHE_HASH2(cp, hset3);
+	hset2 = CACHE_HASH3(cp, hset3);
+	hset3 = CACHE_HASH4(cp, hset3);*/
       ta = CACHE_MK_BADDR(cp, temp->tag, hset3);
       ha = CACHE_HASH1(cp, ta);
       hset0 = CACHE_SET(cp,ha)%(cp->nsets);
@@ -2484,7 +3625,6 @@ cache_access(struct cache_t *cp,	/* cache to access */
       hset2 = CACHE_SET(cp,ha)%(cp->nsets);
       ha = CACHE_HASH4(cp, ta);
       hset3 = CACHE_SET(cp,ha)%(cp->nsets);
-    
       if((cp->sets[hset0].way_one != NULL)){
 	temp = (cp->sets[hset0].way_one);
 	repl_cand3->tree_head->one = malloc(sizeof(*(repl_cand3->tree_head->one)));
@@ -2497,6 +3637,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand3->tree_head->one->three = NULL;
 	repl_cand3->tree_head->one->set = hset0;
 	repl_cand3->tree_head->one->way = 1;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset0);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand3->tree_head->one->one = malloc(sizeof(*(repl_cand3->tree_head->one->one)));
+	  //repl_cand3->tree_head->one = realloc(repl_cand3->tree_head->one, sizeof(*(repl_cand3->tree_head->one)));
+	  repl_cand3->tree_head->one->one->blk = temp;
+	  //(repl_cand3.tree_head)->one = temp;
+	  repl_cand3->tree_head->one->one->parent = repl_cand3->tree_head->one;
+	  repl_cand3->tree_head->one->one->one = NULL;
+	  repl_cand3->tree_head->one->one->two = NULL;
+	  repl_cand3->tree_head->one->one->three = NULL;
+	  repl_cand3->tree_head->one->one->set = h1;
+	  repl_cand3->tree_head->one->one->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand3->tree_head->one->two = malloc(sizeof(*(repl_cand3->tree_head->one->two)));
+	  //repl_cand3->tree_head->two = realloc(repl_cand3->tree_head->two, sizeof(*(repl_cand3->tree_head->two)));
+	  repl_cand3->tree_head->one->two->blk = temp;
+	  //(repl_cand3.tree_head)->two = temp;
+	  repl_cand3->tree_head->one->two->parent = repl_cand3->tree_head->one;
+	  repl_cand3->tree_head->one->two->one = NULL;
+	  repl_cand3->tree_head->one->two->two = NULL;
+	  repl_cand3->tree_head->one->two->three = NULL;
+	  repl_cand3->tree_head->one->two->set = h2;
+	  repl_cand3->tree_head->one->two->way = 3;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand3->tree_head->one->three = malloc(sizeof(*(repl_cand3->tree_head->one->three)));
+	  //repl_cand3->tree_head->three = realloc(repl_cand3->tree_head->three, sizeof(*(repl_cand3->tree_head->three)));
+	  repl_cand3->tree_head->one->three->blk = temp;
+	  //(repl_cand3.tree_head)->three = temp;
+	  repl_cand3->tree_head->one->three->parent = repl_cand3->tree_head->one;
+	  repl_cand3->tree_head->one->three->one = NULL;
+	  repl_cand3->tree_head->one->three->two = NULL;
+	  repl_cand3->tree_head->one->three->three = NULL;
+	  repl_cand3->tree_head->one->three->set = h3;
+	  repl_cand3->tree_head->one->three->way = 4;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset0].way_one;
@@ -2515,6 +3718,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand3->tree_head->two->three = NULL;
 	repl_cand3->tree_head->two->set = hset1;
 	repl_cand3->tree_head->two->way = 2;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset1);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h0].way_one != NULL)){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand3->tree_head->two->one = malloc(sizeof(*(repl_cand3->tree_head->two->one)));
+	  //repl_cand3->tree_head->one = realloc(repl_cand3->tree_head->one, sizeof(*(repl_cand3->tree_head->one)));
+	  repl_cand3->tree_head->two->one->blk = temp;
+	  //(repl_cand3.tree_head)->one = temp;
+	  repl_cand3->tree_head->two->one->parent = repl_cand3->tree_head->two;
+	  repl_cand3->tree_head->two->one->one = NULL;
+	  repl_cand3->tree_head->two->one->two = NULL;
+	  repl_cand3->tree_head->two->one->three = NULL;
+	  repl_cand3->tree_head->two->one->set = h0;
+	  repl_cand3->tree_head->two->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h2].way_three != NULL)){
+	  temp = (cp->sets[h2].way_three);
+	  repl_cand3->tree_head->two->two = malloc(sizeof(*(repl_cand3->tree_head->two->two)));
+	  //repl_cand3->tree_head->two = realloc(repl_cand3->tree_head->two, sizeof(*(repl_cand3->tree_head->two)));
+	  repl_cand3->tree_head->two->two->blk = temp;
+	  //(repl_cand3.tree_head)->two = temp;
+	  repl_cand3->tree_head->two->two->parent = repl_cand3->tree_head->two;
+	  repl_cand3->tree_head->two->two->one = NULL;
+	  repl_cand3->tree_head->two->two->two = NULL;
+	  repl_cand3->tree_head->two->two->three = NULL;
+	  repl_cand3->tree_head->two->two->set = h2;
+	  repl_cand3->tree_head->two->two->way = 3;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand3->tree_head->two->three = malloc(sizeof(*(repl_cand3->tree_head->two->three)));
+	  //repl_cand3->tree_head->three = realloc(repl_cand3->tree_head->three, sizeof(*(repl_cand3->tree_head->three)));
+	  repl_cand3->tree_head->two->three->blk = temp;
+	  //(repl_cand3.tree_head)->three = temp;
+	  repl_cand3->tree_head->two->three->parent = repl_cand3->tree_head->two;
+	  repl_cand3->tree_head->two->three->one = NULL;
+	  repl_cand3->tree_head->two->three->two = NULL;
+	  repl_cand3->tree_head->two->three->three = NULL;
+	  repl_cand3->tree_head->two->three->set = h3;
+	  repl_cand3->tree_head->two->three->way = 4;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset1].way_two;
@@ -2533,6 +3799,69 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	repl_cand3->tree_head->three->three = NULL;
 	repl_cand3->tree_head->three->set = hset2;
 	repl_cand3->tree_head->three->way = 3;
+	taa = CACHE_MK_BADDR(cp, temp->tag, hset2);
+	ha = CACHE_HASH1(cp, taa);
+	h0 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH2(cp, taa);
+	h1 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH3(cp, taa);
+	h2 = CACHE_SET(cp,ha)%(cp->nsets);
+	ha = CACHE_HASH4(cp, taa);
+	h3 = CACHE_SET(cp,ha)%(cp->nsets);
+	if((cp->sets[h0].way_one != NULL)){
+	  temp = (cp->sets[h0].way_one);
+	  repl_cand3->tree_head->three->one = malloc(sizeof(*(repl_cand3->tree_head->three->one)));
+	  //repl_cand3->tree_head->one = realloc(repl_cand3->tree_head->one, sizeof(*(repl_cand3->tree_head->one)));
+	  repl_cand3->tree_head->three->one->blk = temp;
+	  //(repl_cand3.tree_head)->one = temp;
+	  repl_cand3->tree_head->three->one->parent = repl_cand3->tree_head->three;
+	  repl_cand3->tree_head->three->one->one = NULL;
+	  repl_cand3->tree_head->three->one->two = NULL;
+	  repl_cand3->tree_head->three->one->three = NULL;
+	  repl_cand3->tree_head->three->one->set = h0;
+	  repl_cand3->tree_head->three->one->way = 1;
+	}
+	else {
+	  //repl = cp->sets[hset0].way_one;
+	  //hrepl = hset0;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h1].way_two != NULL)){
+	  temp = (cp->sets[h1].way_two);
+	  repl_cand3->tree_head->three->two = malloc(sizeof(*(repl_cand3->tree_head->three->two)));
+	  //repl_cand3->tree_head->two = realloc(repl_cand3->tree_head->two, sizeof(*(repl_cand3->tree_head->two)));
+	  repl_cand3->tree_head->three->two->blk = temp;
+	  //(repl_cand3.tree_head)->two = temp;
+	  repl_cand3->tree_head->three->two->parent = repl_cand3->tree_head->three;
+	  repl_cand3->tree_head->three->two->one = NULL;
+	  repl_cand3->tree_head->three->two->two = NULL;
+	  repl_cand3->tree_head->three->two->three = NULL;
+	  repl_cand3->tree_head->three->two->set = h1;
+	  repl_cand3->tree_head->three->two->way = 2;
+	}
+	else {
+	  //repl = cp->sets[hset1].way_two;
+	  //hrepl = hset1;
+	  //goto miss_handler;
+	}
+	if((cp->sets[h3].way_four != NULL)){
+	  temp = (cp->sets[h3].way_four);
+	  repl_cand3->tree_head->three->three = malloc(sizeof(*(repl_cand3->tree_head->three->three)));
+	  //repl_cand3->tree_head->three = realloc(repl_cand3->tree_head->three, sizeof(*(repl_cand3->tree_head->three)));
+	  repl_cand3->tree_head->three->three->blk = temp;
+	  //(repl_cand3.tree_head)->three = temp;
+	  repl_cand3->tree_head->three->three->parent = repl_cand3->tree_head->three;
+	  repl_cand3->tree_head->three->three->one = NULL;
+	  repl_cand3->tree_head->three->three->two = NULL;
+	  repl_cand3->tree_head->three->three->three = NULL;
+	  repl_cand3->tree_head->three->three->set = h3;
+	  repl_cand3->tree_head->three->three->way = 4;
+	}
+	else {
+	  //repl = cp->sets[hset2].way_three;
+	  //hrepl = hset2;
+	  //goto miss_handler;
+	}
       }
       else {
 	//repl = cp->sets[hset2].way_three;
@@ -2548,11 +3877,15 @@ cache_access(struct cache_t *cp,	/* cache to access */
     
     repl_node = find_repl_node (cp, repl_cand0, repl_cand1, repl_cand2, repl_cand3);
     repl  = repl_node->blk;     
-    hrepl = repl_node->set;
+    if(repl_node->rset < cp->nsets){
+      hrepl = repl_node->rset;
+    }
+    else
+      hrepl = repl_node->set;
     if(hrepl >= cp->nsets){
       hrepl = set;
     }
-    rep_lat += (4*(2)+1);
+    rep_lat += (12*(2)+1);
   }
   miss_handler:
   
@@ -2571,7 +3904,8 @@ cache_access(struct cache_t *cp,	/* cache to access */
 
       if (repl_addr)
 	*repl_addr = CACHE_MK_BADDR(cp, repl->tag, repl->set);
- 
+	//*repl_addr = CACHE_BADDR(cp, addr);
+
       /* don't replace the block until outstanding misses are satisfied */
       lat += BOUND_POS(repl->ready - now);
  
@@ -2583,11 +3917,12 @@ cache_access(struct cache_t *cp,	/* cache to access */
       
       //if ((repl->tag == 0) && repl->addr == 0)
       //repl->addr = CACHE_MK_BADDR(cp, repl->tag, hrepl);
+      
       if (repl->status & CACHE_BLK_DIRTY)
 	{
 	  /* write back the cache block */
 	  cp->writebacks++;
-	  lat += cp->blk_access_fn(Write, CACHE_MK_BADDR(cp, repl->tag, repl->set),
+	  lat += cp->blk_access_fn(Write, /*CACHE_BADDR(cp, repl->addr)*/CACHE_MK_BADDR(cp, repl->tag, repl->set),
 				   cp->bsize, repl, now+lat);
 	}
     }
@@ -2595,7 +3930,7 @@ cache_access(struct cache_t *cp,	/* cache to access */
   /* update block tags */
   repl->tag = tag;
   repl->status = CACHE_BLK_VALID;	/* dirty bit set on update */
-
+  
   /* read data block */
   lat += cp->blk_access_fn(Read, CACHE_BADDR(cp, addr), cp->bsize,
 			   repl, now+lat);
